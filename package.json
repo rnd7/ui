@@ -1,0 +1,30 @@
+{
+  "name": "rnd7-ui",
+  "version": "0.0.1",
+  "description": "Minimalistic JavaScript user interface development library",
+  "keywords": [
+    "rnd7",
+    "ui",
+    "keyboard",
+    "osailoax",
+    "gui",
+    "minimal",
+    "electron",
+    "html5"
+  ],
+  "license": "MIT",
+  "author": "rnd7 <rnd7@riseup.net>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rnd7/ui"
+  },
+  "bugs": {
+    "url": "https://github.com/rnd7/ui/issues"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-jsdoc": "^2.1.0",
+    "ink-docstrap": "^1.2.1"
+  }
+}

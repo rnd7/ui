@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: gui.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: gui.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>(function(document, window, bindKeyboard, unbindKeyboard) {
+
+  var UPDATE_EVENT = "update";
+
+  /**
+   * Bind HTML Elements
+   * @example
+   * gui.bind({
+   *  '#someId': {
+   *    command: {
+   *      "SHIFT+c": gui.THRU,
+   *    },
+   *    init: function() {
+   *      console.log("init", this);
+   *      this.title = "SHIFT+C";
+   *    },
+   *    process: function(ev) {
+   *      console.log("process", this, ev);
+   *      return true // invokes update method
+   *    },
+   *    update: function() {
+   *      console.log("update", this);
+   *    }
+   *  }
+   *});
+   *
+   * @module gui/bind
+   * @param {object} bindings - object keys used as element selectors
+   */
+  function bind(bindings) {
+    for (var selector in bindings) {
+      binding = bindings[selector];
+      var elems = Array.prototype.slice.call( document.querySelectorAll(selector));
+      elems.forEach(function(elem){
+        if (binding.process instanceof Function) {
+          function _update(ev){
+            // invoke process followed by update if process return true
+            if(binding.process.call(elem, ev)) binding.update.call(elem);
+          }
+          if (/^button$|^a$|^div$/.test( elem.tagName.toLowerCase())) {
+            elem.addEventListener('click', _update)
+          }else{
+            elem.addEventListener('change', _update)
+          }
+        }
+        if (binding.update instanceof Function) {
+          // forced update
+          elem.addEventListener(UPDATE_EVENT, function(ev){
+            binding.update.call(elem, ev)
+          })
+        }
+        if (bindKeyboard &amp;&amp; binding.hasOwnProperty("command")) {
+          for(var command in binding.command) {
+            var callback = binding.command[command];
+            bindKeyboard(command, function(ev){
+              if(callback instanceof Function) callback.call(elem, ev);
+              if(binding.process instanceof Function)
+                binding.process.call(elem, ev);
+              if(binding.update instanceof Function)
+                binding.update.call(elem);
+              return false;
+            });
+          }
+        }
+        if (binding.init instanceof Function) binding.init.call(elem);
+        if (binding.update instanceof Function) binding.update.call(elem);
+      })
+    }
+  }
+
+  /**
+   * Unbind HTML Elements
+   * @module gui/unbind
+   * @param {object} bindings - jQuery style selectors
+   */
+  function unbind(bindings) {
+    for (var selector in bindings) {
+      binding = bindings[selector];
+      var elems = Array.prototype.slice.call(
+        document.querySelectorAll(selector)
+      );
+      elems.forEach(function(elem){
+        elem.removeEventListener('change');
+        elem.removeEventListener('click');
+        elem.removeEventListener(UPDATE_EVENT);
+        if (unbindKeyboard &amp;&amp; binding.hasOwnProperty("command")) {
+          for(var command in binding.command) {
+            unbindKeyboard(command);
+          }
+        }
+      });
+    }
+  }
+
+  /**
+   * Force Update. Will trigger the update method of all matched elements.
+   * @module gui/update
+   * @param {string} selector - jQuery style selectors
+   */
+  function update(selector) {
+    var elems = Array.prototype.slice.call(
+      document.querySelectorAll(selector)
+    );
+    elems.forEach(function(elem){
+      elem.dispatchEvent(new Event("update"));
+    });
+  }
+
+  var gui = {
+    bind: bind,
+    unbind: unbind,
+    update: update,
+    THRU: function(ev) { return true },
+    TERMINATE: function( ev ) { ev.preventDefault(); return false; }
+  }
+
+  if ( typeof module !== "undefined" &amp;&amp; module.exports ) {
+    module.exports = gui; // NPM/Node
+  } else if ( typeof define === 'function' &amp;&amp; define.amd ) {
+    /** @exports gui */
+    define(function(){return gui;}); // AMD/requirejs
+  } else {
+    window.gui = gui; // Browser
+  }
+})(
+  document,
+  window,
+  keyboard.bind || Mousetrap.bind || keyboardJS.bind || keymage || key,
+  keyboard.unbind || Mousetrap.unbind || keyboardJS.unbind
+)
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-gui_bind.html">gui/bind</a></li><li><a href="module-gui_unbind.html">gui/unbind</a></li><li><a href="module-gui_update.html">gui/update</a></li><li><a href="module-keyboard_bind.html">keyboard/bind</a></li><li><a href="module-keyboard_caseSensitive.html">keyboard/caseSensitive</a></li><li><a href="module-keyboard_unbind.html">keyboard/unbind</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jul 12 2016 14:36:33 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>rnd7 UI Example</title>
+</head>
+<body>
+  <script src="../lib/keyboard.js"></script>
+  <script src="../lib/gui.js"></script>
+  <h1>rnd7 UI Examples</h1>
+  <hr>
+  <h2>Keyboard Event Example. Hack in 1 or CTRL+LEFT.</h2>
+  <script>
+    keyboard.bind("1", function(ev) {
+      alert("FOO");
+    })
+    keyboard.bind("CTRL+LEFT", function(ev) {
+      alert("BAR");
+    })
+  </script>
+  <hr>
+  <h2>Button Toggle</h2>
+  <button data-name="toggle">Toggle Text Color</button>
+  <script>
+    var currentColor;
+    // bind the button selected by its data attribute
+    gui.bind({
+      'button[data-name="toggle"]': {
+        command: {
+          "SHIFT+c": gui.THRU,
+        },
+        init: function() {
+          // use this keyword to access current html element
+          this.title = "SHIFT+C";
+        },
+        process: function(ev) {
+          // Use this keyword to access html element. Event passed as first arg
+          if(this.style.color !== "rgb(0, 0, 255)") {
+            this.style.color = "rgb(0, 0, 255)"
+          } else {
+            this.style.color = "rgb(0, 0, 0)"
+          };
+          return true // return true to invoke update method afterwards
+        },
+        update: function() {
+          // use this keyword to access current html element
+          currentColor = this.style.color
+          console.log(currentColor);
+        }
+      }
+    })
+  </script>
+  <hr>
+  <h2>Numeric Stepper</h2>
+  <input id="myNumericStepper" type="number" value="0" min="0" max="255">
+  <script>
+    var currentColor;
+    // bind the button selected by its data attribute
+    gui.bind({
+      '#myNumericStepper': {
+        command: {
+          "i": function(ev, i) {
+            this.value++;
+          },
+          "d": function(ev, d) {
+            this.value--;
+          },
+        },
+        init: function() {
+          // use this keyword to access current html element
+          this.title = "i to increase, d to decrease";
+        },
+        process: function(ev) {
+          // Use this keyword to access html element. Event passed as first arg
+          this.value = Math.min(this.max, Math.max(this.min, this.value));
+          return true // return true to invoke update method afterwards
+        },
+        update: function() {
+          // use this keyword to access current html element
+          console.log("stepper update", this.value);
+        }
+      }
+    })
+  </script>
+</body>
+</html>
