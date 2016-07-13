@@ -27,4 +27,4 @@ You can download the latest release minified and ready to use.
 You can build this libraries automatically using Grunt.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
