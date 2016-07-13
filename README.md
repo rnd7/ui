@@ -9,19 +9,19 @@ Compatibility and smooth intergration with the Electron Framework was a major pr
 ## rnd7 keyboard
 The keyboard lib lets you register callbacks for keyboard event combinations or sequences, without worrying about browser specific characteristics or down and press states.
 
-* [rnd7 keyboard](https://github.com/rnd7/ui/lib/keyboard.js)
+* [rnd7 keyboard](https://github.com/rnd7/ui/tree/master/lib/keyboard.js)
 
 ## rnd7 gui
 Use the gui lib to bind your html5 form to your data model. You might combine it with rnd7 keyboard to provide keyboard shortcuts.
 
-* [rnd7 gui](https://github.com/rnd7/ui/lib/gui.js)
+* [rnd7 gui](https://github.com/rnd7/ui/tree/master/lib/gui.js)
 
 ## download
 You can download the latest release minified and ready to use.
 
-* [rnd7 keyboard](https://github.com/rnd7/ui/bin/keyboard.min.js)
-* [rnd7 gui](https://github.com/rnd7/ui/bin/gui.min.js)
-* [rnd7 gui & keyboard](https://github.com/rnd7/ui/bin/ui.min.js)
+* [rnd7 keyboard](https://github.com/rnd7/ui/tree/master/bin/keyboard.min.js)
+* [rnd7 gui](https://github.com/rnd7/ui/tree/master/bin/gui.min.js)
+* [rnd7 gui & keyboard](https://github.com/rnd7/ui/tree/master/bin/ui.min.js)
 
 ## build
 You can build this libraries automatically using Grunt.
